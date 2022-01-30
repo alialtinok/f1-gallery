@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+//connect DB
 mongoose.connect('mongodb://localhost/f1-test-db', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
