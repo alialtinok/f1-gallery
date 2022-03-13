@@ -1,0 +1,63 @@
+<%- include('partials/_header') -%>
+<body>
+	<div class="tm-page-wrap mx-auto">
+		<div class="position-relative">
+		
+            <%- include('partials/_navigation') -%>
+
+			<div class="tm-welcome-container tm-fixed-header tm-fixed-header-1">
+				<div class="text-center">
+					<p class="pt-5 px-3 tm-welcome-text tm-welcome-text-2 mb-1 text-white mx-auto">Background image can be fixed. Content will simply slide over.</p>                	
+				</div>                
+            </div>
+
+			<!-- Header image -->
+            <div id="tm-fixed-header-bg"></div> 
+		</div>
+
+		<!-- Page content -->
+		<div class="container-fluid">
+			<div class="mx-auto tm-content-container">
+				<main>
+					<div class="row mb-4 pb-4">
+						<div class="col-8">
+							<img src="<%= photo.image %>" alt="Image" class="img-fluid tm-catalog-item-img">
+						</div>
+					</div>
+					<div class="row mb-5 pb-5">
+						<div class="col-xl-8 col-lg-7">
+							<!-- Video description -->
+							<div class="tm-video-description-box">
+								<h2 class="mb-5 tm-video-title"> <%= photo.title %> </h2>
+								<p class="mb-4"> <%= photo.description %> </p> 
+							</div>							
+						</div>
+						<div class="col-xl-4 col-lg-5">
+							<!-- Share box -->
+							<div class="tm-bg-gray tm-share-box">
+								<h6 class="tm-share-box-title mb-4">Share this video</h6>
+								<div class="mb-5 d-flex">
+									<a href="" class="tm-bg-white tm-share-button"><i class="fab fa-facebook"></i></a>
+									<a href="" class="tm-bg-white tm-share-button"><i class="fab fa-twitter"></i></a>
+									<a href="" class="tm-bg-white tm-share-button"><i class="fab fa-pinterest"></i></a>
+									<a href="" class="tm-bg-white tm-share-button"><i class="far fa-envelope"></i></a>
+								</div>
+								<p class="mb-4">Author: <a href="https://templatemo.com" class="tm-text-link">TemplateMo</a></p>
+								<a href="#" class="tm-bg-white px-5 mb-4 d-inline-block tm-text-primary tm-likes-box tm-liked">
+									<i class="fas fa-heart mr-3 tm-liked-icon"></i>
+									<i class="far fa-heart mr-3 tm-not-liked-icon"></i>
+									<span id="tm-likes-count">486 likes</span>
+								</a>
+								<div>
+									<button class="btn btn-primary p-0 tm-btn-animate tm-btn-download tm-icon-download"><span>Download Video</span></button>	
+								</div>								
+							</div>
+						</div>
+					</div>
+					</div>
+				</main>
+
+<%- include('partials/_footer') -%>
+
+</body>
+</html>
