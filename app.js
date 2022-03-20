@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const fileUpload = require('express-fileupload');
 const req = require('express/lib/request');
 const res = require('express/lib/response');
+const methodOverride = require('method-override')
 const app = express();
 const fs = require('fs');
 const path = require('path');
@@ -23,6 +24,8 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(fileUpload());
+app.use(methodOverride('_method'));
+
 
 //Routes
 app.get('/', async (req, res) => {
@@ -80,12 +83,31 @@ app.post('/photos', async (req, res) => {
 });  
  
 
+// Edit e gönderme
 app.get('/photos/edit/:id', async (req, res) => {
-  const photo = await Photo.findOne({ _id: req.params.id });
-  res.render('edit', {
+  const photo = await Photo.findOne({ _id: req.params.id }); //Hangi fotoyla işlem yapacaksam onu yakaladım.
+  res.render('edit', {  //edit sayfasını render ettim.
       photo,
   });
 });
+
+
+// After Edit
+app.put('/photos/:id', async (req, res) => {
+  const photo = await Photo.findOne({ _id: req.params.id }); //Hangi fotoyla işlem yapacaksam onu yakaladım.
+  photo.title = req.body.title;       // yeni fotonun bilgileri body'nin içerisinde geliyordu
+  photo.description = req.body.description;  // Add ve edit işlemlerinin ikisinde de photonun bodysini kullanıyoruz.
+  photo.save(); // Photoyu kaydettim.
+
+  res.redirect(`/photos/${req.params.id}`); // Photonun bulunduğu sayfaya (id ye göre) redirect ettim.
+
+  //res.render('photo' , {photo});
+  
+});
+
+
+
+
 
 
 const port = 3000;
