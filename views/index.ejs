@@ -8,7 +8,7 @@
 
 			<div class="tm-welcome-container tm-fixed-header tm-fixed-header-1">
 				<div class="text-center">
-					<p class="pt-5 px-3 tm-welcome-text tm-welcome-text-2 mb-1 text-white mx-auto">Background image can be fixed. Content will simply slide over.</p>                	
+					<p class="pt-5 px-3 tm-welcome-text tm-welcome-text-2 mb-1 text-white mx-auto"> </p>                	
 				</div>                
             </div>
 
@@ -23,10 +23,15 @@
 					<div class="row mb-5 pb-4">
 						<div class="col-12">
 							<!-- Video player 1422x800 -->
-							<video width="1422" height="800" controls autoplay>
-							  <source src="video/wheat-field.mp4" type="video/mp4">							  
-							Your browser does not support the video tag.
-							</video>
+
+							<video width="1420" height="800" controls="controls" >
+ 
+								<div id="tm-video-container">
+									<img src="../public/img/charles-leclerc-ferrari-at-the-1.jpg" alt="">
+								</div>
+								
+								<i id="tm-video-control-button" class="fas fa-pause"></i>
+							   </video>
 						</div>
 					</div>
 
@@ -57,24 +62,21 @@
 
 
 
-									<% for (let i =0; i < photos.length; i++) { %>
-
-										<div class="col-lg-4 col-md-6 col-sm-12 tm-catalog-item">
-											<div class="position-relative tm-thumbnail-container">
-												<img src="<%= photos[i].image %>" alt="Image" class="img-fluid tm-catalog-item-img">    
-												<a href="/photos/<%= photos[i]._id %>" class="position-absolute tm-img-overlay">
-													<i class="fas fa-play tm-overlay-icon"></i>
-												</a>
-											</div>    
-											<div class="p-3 tm-catalog-item-description">
-												<h3 class="tm-text-gray text-center tm-catalog-item-title"> <%= photos[i].title %></h3>
-												<p class="tm-catalog-item--text"> <%= photos[i].description %></p>														
-											</div>
+								<% for (let i = 0; i < photos.length; i++) { %>
+									<div class="col-lg-4 col-md-6 col-sm-12 tm-catalog-item">
+										<div class="position-relative tm-thumbnail-container">
+											<img src="<%= photos[i].image %>" alt="Image" class="img-fluid tm-catalog-item-img">    
+											<a href="/photos/<%= photos[i]._id %>" class="position-absolute tm-img-overlay">
+												<i class="fas fa-play tm-overlay-icon"></i>
+											</a>
+										</div>    
+										<div class="p-4 tm-bg-gray tm-catalog-item-description">
+											<h3 class="tm-text-primary mb-3 tm-catalog-item-title"> <%= photos[i].title %> </h3>
+											<p class="tm-catalog-item-text"> <%= photos[i].description %> </p>
 										</div>
-
-									<% } %>
+									</div>
+									<% } %> 
 									
-
 								</div>
 							</div>
 						</div>
@@ -86,19 +88,56 @@
 
 
 					
-    <script>
-    	$(document).ready(function() {
-    		$('.tm-likes-box').click(function(e) {
-    			e.preventDefault();
-    			$(this).toggleClass('tm-liked');
 
-    			if($(this).hasClass('tm-liked')) {
-    				$('#tm-likes-count').html('486 likes');
-    			} else {
-    				$('#tm-likes-count').html('485 likes');
-    			}
-    		});
-    	});
-    </script>
+					<script>
+						function setVideoSize() {
+							const vidWidth = 1920;
+							const vidHeight = 1080;
+							let windowWidth = window.innerWidth;
+							let newVidWidth = windowWidth;
+							let newVidHeight = windowWidth * vidHeight / vidWidth;
+							let marginLeft = 0;
+							let marginTop = 0;
+							if (newVidHeight < 500) {
+								newVidHeight = 500;
+								newVidWidth = newVidHeight * vidWidth / vidHeight;
+							}
+							if(newVidWidth > windowWidth) {
+								marginLeft = -((newVidWidth - windowWidth) / 2);
+							}
+							if(newVidHeight > 720) {
+								marginTop = -((newVidHeight - $('#tm-video-container').height()) / 2);
+							}
+							const tmVideo = $('#tm-video');
+							tmVideo.css('width', newVidWidth);
+							tmVideo.css('height', newVidHeight);
+							tmVideo.css('margin-left', marginLeft);
+							tmVideo.css('margin-top', marginTop);
+						}
+						$(document).ready(function () {
+							/************** Video background *********/
+							setVideoSize();
+							// Set video background size based on window size
+							let timeout;
+							window.onresize = function () {
+								clearTimeout(timeout);
+								timeout = setTimeout(setVideoSize, 100);
+							};
+							// Play/Pause button for video background      
+							const btn = $("#tm-video-control-button");
+							btn.on("click", function (e) {
+								const video = document.getElementById("tm-video");
+								$(this).removeClass();
+								if (video.paused) {
+									video.play();
+									$(this).addClass("fas fa-pause");
+								} else {
+									video.pause();
+									$(this).addClass("fas fa-play");
+								}
+							});
+						})
+					</script>
+					
 </body>
 </html>
