@@ -24,7 +24,9 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(fileUpload());
-app.use(methodOverride('_method'));
+app.use(methodOverride('_method', {
+  methods : ['POST', 'GET']
+}));
 
 
 //Routes
@@ -106,7 +108,19 @@ app.put('/photos/:id', async (req, res) => {
 });
 
 
-
+// Delete photo
+app.delete('/photos/:id', async (req, res) => {
+  // req ile gelenr resim bulundu
+  const photo = await Photo.findById(req.params.id);
+  // localde resmin yolu bulundu
+  let deletedImage = __dirname + '/public' + photo.image;
+  // image localde silindi
+  fs.unlinkSync(deletedImage);
+  // yapı db den silindi
+  await Photo.findByIdAndRemove(req.params.id);
+  // anasayfaya yönlendirdi
+  res.redirect('/');
+});
 
 
 
