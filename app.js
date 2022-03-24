@@ -8,10 +8,15 @@ const app = express();
 const ejs = require('ejs');
 const photoController = require('./controllers/photoController');
 const pageController = require('./controllers/pageController');
-//connect DB
-mongoose.connect('mongodb://localhost/f1-test-db', {
-  useNewUrlParser: true, // Bu iki dönüştürme db nin uygun formatta okunabilmesi için zorunludur.
-  useUnifiedTopology: true,
+//connect DB  tSRWfkiM4GPVBjbR
+mongoose.connect('mongodb+srv://alialtinokDb:5ceBHJ9wCOt0OKeq@cluster0.kd8na.mongodb.net/f1-application?retryWrites=true&w=majority', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+
+}).then(() => {
+    console.log('db connected!')
+}).catch((err) => {
+    console.log(err)
 });
 
 // Template Engine
@@ -49,8 +54,8 @@ app.get('/photos/edit/:id', pageController.getEditPage);
 
 
 
+const port = process.env.PORT || 5000;
 
-const port = 3000;
 app.listen(port, () => {
-  console.log(`Uygulama ${port} nolu portu dinlemektedir.`);
+    console.log(`Sunucu ${port} portunda başlatıldı..`);
 });
