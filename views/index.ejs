@@ -76,13 +76,31 @@
 										</div>
 									</div>
 									<% } %> 
-									
+								</div>
+								
+
+								 <!-- Catalog Paging Buttons -->
+								 <div>
+									<% if (pages > 0) { %>
+									<ul class="nav tm-paging-links">
+										<% for (let i = 1; i <= pages; i++) { %>
+											<% if (i === current) { %>
+												<li class="nav-item active"><a href="/?page=<%= i %>" class="nav-link tm-paging-link"><%= i %></a></li>
+											<% } else if (i < pages ) { %>
+												<li class="nav-item"><a href="/?page=<%= i %>" class="nav-link tm-paging-link"><%= i %></a></li>
+											<% } else { %>
+												<li class="nav-item"><a href="/?page=<%= i %>" class="nav-link tm-paging-link">>></a></li>
+											<% } %>  
+										<% } %>
+									</ul>
+									<% } %>
 								</div>
 							</div>
-						</div>
-					</main>
-	
-					<%- include('partials/_footer') -%>
+							</main>
+							
+							<%- include ('partials/_footer') -%>
+			
+
 
 					
 

@@ -2,10 +2,24 @@ const Photo = require('../models/Photo')
 const fs = require('fs')
 
 exports.getAllPhotos = async (req, res) => {
-  const photos = await Photo.find({}); // Birden fazla foto için. find içerisine koşul yazılmadı.
+
+  const page = req.query.page || 1; // req.query.page ile gelen sayfa bilgisi varsa onu alıyoruz.
+  const limit = 3; // 3 tane foto gösterilecek.
+  const totalPhotos = await Photo.countDocuments(); // db'deki toplam foto sayısını buluyoruz.
+  const photos = await Photo.find().skip((page - 1) * limit).limit(limit); //skip ile ilk 3 foto getir.
   res.render('index', {
-    photos, // anasayfaya dönerken yukarıda tanımladığım photos(fotoların tamamını) render et.
+    photos,
+    current: page,
+    pages: Math.ceil(totalPhotos / limit),
   });
+
+
+
+
+  // const photos = await Photo.find({}); // Birden fazla foto için. find içerisine koşul yazılmadı.
+  // res.render('index', {
+  //   photos, // anasayfaya dönerken yukarıda tanımladığım photos(fotoların tamamını) render et.
+  // });
 };
 
 
